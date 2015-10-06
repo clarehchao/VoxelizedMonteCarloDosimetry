@@ -1,14 +1,11 @@
 ## Voxelized Monte Calor Dosimety Simulations
 
-Software: 
-- Geant4 - an Object-Oriented Toolkit for Simulation in High Energy Physics
-- VoxelizedHumanDoseMultiSDv3
-
-Author: Shih-ying (Clare) Huang
-
-Institution: University of California, San Francisco
-
-Organization: Physics Research Laboratory (Principle Investigator: Prof. Youngho Seo)
+1. Author: Shih-ying (Clare) Huang
+2. Institution: University of California, San Francisco
+3. Organization: Physics Research Laboratory (Principle Investigator: Prof. Youngho Seo)
+4. Software: 
+	- Geant4 - an Object-Oriented Toolkit for Simulation in High Energy Physics
+	- VoxelizedHumanDoseMultiSDv3
 
 ### Introduction
 
@@ -27,14 +24,13 @@ The geometry is constructed in the VHDDetectorConstruction class derived from th
 4. Construct the phantom implemented by its derived class RegularVHDDetectorConstruction or NestedParamVHDDetectorConstruction (per user's choice via DetectorContFactory class)
 
 Note:
-- Prior to running this application, geometry files will need to be generated in the .g4m format (see [Image-based Dosimetry Python Toolkit] (LINK!!))
+- Prior to running this application, geometry files will need to be generated in the .g4m format (see [Image-based Dosimetry Python Toolkit] (https://github.com/clarehchao/ImageBasedDosimetryTool))
 - There are several scorers defined as well to tally the physical quantities of interest such as
 	- VHDMSDCellFlux and VHDMSDCellFlux_RegParam
 	- VHDPSEnergyDeposit and VHDPSEnergyDeposit_RegParam
 	- VHDMSDNofStep was implemented as an optional scorer; it's only defined for the nested 
          parameterized geometry definition (see GetIndex(....) in its class definition)
-	- these derived classes have different definition in the member function "GetIndx(....)" for nested parameterized vs.regular parameterized geometry
-	- future improvement will re-structure the usage of these derived classes using factory design pattern
+	- these derived classes have different definition in the member function "GetIndx(....)" for nested parameterized vs.regular parameterized geometry (DetectorContFactory class will use one of the geoemtry option)
 
 #### PHYSICS LIST
 
@@ -56,6 +52,7 @@ In order to score quantities of interest, the following optinal user-defined act
 2. VHDMultiSDEventAction: Set up only for printing out event ID during a simultion
 3. VHDMSDRunAction: set up the framework to keep updating the scorers from event to event (each score is treated as a class and a container of scorers is interfaced for event-by-event update
 4. VHDMultiSDRunAction: EndOfRunAction was defined to save the final scorer results in .raw or .root format (defined in the derived class VHDMSDRunActionROOT)
+5. RunActionFactory class will select which RunAction to use for the run (VHDMultiRunAction or VHDMultiRunActionROOT class)
     
 
 #### VISUALISATION
