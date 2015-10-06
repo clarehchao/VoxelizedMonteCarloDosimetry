@@ -74,10 +74,11 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 
 ##### Built the Geant4 C++ software via cmake
 
-1. Set up the Geant4 environment variables 
+1. Set up the Geant4 environment variables
 ```
 > source [GEANT4 Install directory]/bin/geant4.sh
 ```
+
 2. Make a build directory to generate the executable
 ```
 > mkdir build
