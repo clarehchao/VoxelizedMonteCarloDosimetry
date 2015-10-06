@@ -15,7 +15,7 @@ Improvement from VoxelizedHumanDoseMultiSDv1 include:
 - Added a factory design pattern class for DetectorConstruction class 
 - Added a Factory design pattern class for RunAction class
 
-#### GEOMETRY DEFINITION
+### GEOMETRY DEFINITION
 
 The geometry is constructed in the VHDDetectorConstruction class derived from the Geant4 abstract class, G4VUserDetectorConstruction. The VHDDetectorConstruction class does the following:
 
@@ -33,11 +33,11 @@ Note:
          parameterized geometry definition (see GetIndex(....) in its class definition)
 	- these derived classes have different definition in the member function "GetIndx(....)" for nested parameterized vs.regular parameterized geometry (DetectorContFactory class will use one of the geoemtry option)
 
-#### PHYSICS LIST
+### PHYSICS LIST
 
 This application uses the modular physics lists as a starter to define the physics needed for dosimetry purpose.  Since this application is designed to work with any form of targeted radionuclide therapy or other radiation therapy, the option to select the appropriate physics lists defined in Geant4 are necessary.  By default, G4EmStandardPhysics, G4DecayPhysics, and G4RadioactiveDecayPhysics are registered in the user-defined physicslist class.  A physics messenger class, VHDPhysicsListMessenger, was defined for users to select physics lists via macro or command line interactively.
  	 
-#### PRIMARY GENERATOR
+### PRIMARY GENERATOR
 
 The primary generator is defined in the VHDPrimaryGeneratorAction class, which does the following..
 1. Declare a particle gun for primary generation
@@ -45,7 +45,7 @@ The primary generator is defined in the VHDPrimaryGeneratorAction class, which d
 3. Sample the particle position and momentum using Rejection sampling and built-in function that generates isotropic momemtum (this can replaced by using G4ParticleSource)
 4. FIRE away with the primary particles!
 
-#### DETECTOR RESPONSE & SCORING
+### DETECTOR RESPONSE & SCORING
 
 In order to score quantities of interest, the following optinal user-defined actions were defined
 
@@ -56,7 +56,7 @@ In order to score quantities of interest, the following optinal user-defined act
 5. RunActionFactory class will select which RunAction to use for the run (VHDMultiRunAction or VHDMultiRunActionROOT class)
     
 
-#### MC Simulation Setup:
+### MC Simulation Setup
 To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 ```
 # Set the isotope for the source particle, e.g. I-131
@@ -70,9 +70,9 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 /VHDMSDv1/phys/addPhysics emstandard_opt4
 ```
 
-##### HOW TO RUN
+### How to Run the MC software
 
-###### Built the Geant4 C++ software via cmake
+##### Built the Geant4 C++ software via cmake
 ```
 # Set up the Geant4 environment variables 
 > source [GEANT4 Install directory]/bin/geant4.sh
@@ -89,7 +89,7 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 
 Please see the [Geant4 compile and run tutorial videos] (http://geant4.in2p3.fr/spip.php?article84&lang=en) for more examples of Geant4 install, compile, and run instructions. 
 
-###### Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
+##### Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
 ```
 # See the bash script in scripts/VHDMSDv3MultiRun.sh 
 
@@ -109,7 +109,7 @@ geoname=MIBGPT1_segCT
 > source multijob.sh > multijoblog.txt
 
 ```
-###### Process the .root files output from VHDMSDv3 to generate appropriate .dat files for data post-processing
+##### Process the .root files output from VHDMSDv3 to generate appropriate .dat files for data post-processing
 ```
 # start the application Root
 > root
