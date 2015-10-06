@@ -114,16 +114,12 @@ geoname=MIBGPT1_segCT
 
 ##### Process the .root files output from VHDMSDv3 to generate appropriate .dat files for data post-processing
 
-Start the application Root
-```
-> root
-```
-
 Run the root processing code in rootC/Root2Dat\_EdepTree.C, Root2Dat\_SrcEngHIST.C, etc.
 ```
 # G4dataDir: the data directory of a given G4 MC setup, e.g.  /data4/G4data_Clare/G4.9.6.p02work/VoxelizedHumanDoseMultiSDv3-build/data/GEO_segCT_MIBGPT1_2/SRCMP_segCT_MIBGPT1_2
 # SrcOrganNameTxtFile: the name of the textfile where all the source organs are specified, "SourceOrgan.txt" is saved in [G4dataDir]
 # SrcParticle: the name of the source particle, e.g. "I131"
 # Run_start and Run_end: the starting and end Run ID's to process
-> .x rootC/Root2Dat_EdepTree.C ("[G4dataDir]","[SrcOrganNameTxtFile]","[SrcParticke]",[Run_start],[Run_end])
+
+> root -l 'rootC/runEdepTree.C("[G4dataDir]","[SrcOrganNameTxtFile]","[SrcParticke]",[Run_start],[Run_end])'
 ```
