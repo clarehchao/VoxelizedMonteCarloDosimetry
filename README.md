@@ -35,7 +35,7 @@ Note:
 
 #### PHYSICS LIST
 
-This application uses the modular physics lists as a starter to define the physics needed for dosimetry purpose.  Since this application is designed to work with any form of targeted radionuclide therapy or other radiation therapy, the option to select the appropriate physics lists defined in Geant4 are necessary.  By default, G4EmStandardPhysics??????, G4DecayPhysics, and G4RadioactiveDecayPhysics are registered in the user-defined physicslist class.  A physics messenger class, VHDPhysicsListMessenger, was defined for users to select physics lists via macro or command line interactively.
+This application uses the modular physics lists as a starter to define the physics needed for dosimetry purpose.  Since this application is designed to work with any form of targeted radionuclide therapy or other radiation therapy, the option to select the appropriate physics lists defined in Geant4 are necessary.  By default, G4EmStandardPhysics, G4DecayPhysics, and G4RadioactiveDecayPhysics are registered in the user-defined physicslist class.  A physics messenger class, VHDPhysicsListMessenger, was defined for users to select physics lists via macro or command line interactively.
  	 
 #### PRIMARY GENERATOR
 
@@ -56,13 +56,23 @@ In order to score quantities of interest, the following optinal user-defined act
 5. RunActionFactory class will select which RunAction to use for the run (VHDMultiRunAction or VHDMultiRunActionROOT class)
     
 
-#### VISUALISATION
+#### MC Simulation Setup:
+To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
+```
+# Set the isotope for the source particle, e.g. I-131
+/gun/ion 53 131 0 0  #A (atomicNumber), Z (atomicMass), Q (charge of ion in unit of e), E (excitation energy in kev)
+/grdm/nucleusLimits 131 131 53 53 # restrict radioactive decay to I-131
 
-this version of the VHDMSD does not turn on any visualization related function.
+# Set the # of total events in the MC simulation
+/run/beamOn 1000000 # number of particles
+
+# Set up the physics list option: emstandard_opt1, emstandard_opt2, emstandard_opt3, emstandard_opt4, emlivermore, or empenelope
+/VHDMSDv1/phys/addPhysics emstandard_opt4
+```
 
 ##### HOW TO RUN
 
-1. Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization) 
+1. Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
 ```
 # See the bash script in scripts/VHDMSDv3MultiRun.sh 
 
@@ -82,7 +92,6 @@ geoname=MIBGPT1_segCT
 > source multijob.sh > multijoblog.txt
 
 ```
-
 2. To process the .root files output from VHDMSDv3, do the following to generate appropriate .dat files for data post-processing:
 ```
 # start the application Root
