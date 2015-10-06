@@ -72,7 +72,7 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 
 ##### HOW TO RUN
 
-1. Built the Geant4 C++ software via cmake
+###### Built the Geant4 C++ software via cmake
 ```
 # Set up the Geant4 environment variables 
 > source [GEANT4 Install directory]/bin/geant4.sh
@@ -80,16 +80,16 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 # Make a build directory
 > mkdir build
 > cd build
-
 > ccmake ../VoxelizedHumanDoseMultiSDv3 # press 'g' to generate
 
 # N is the # of cores on the machine you'll run the MC simulations
 # this step will generate the executable
 > make -j[N]
 ```
+
 Please see the [Geant4 compile and run tutorial videos] (http://geant4.in2p3.fr/spip.php?article84&lang=en) for more examples of Geant4 install, compile, and run instructions. 
 
-2. Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
+###### Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
 ```
 # See the bash script in scripts/VHDMSDv3MultiRun.sh 
 
@@ -109,7 +109,7 @@ geoname=MIBGPT1_segCT
 > source multijob.sh > multijoblog.txt
 
 ```
-3. To process the .root files output from VHDMSDv3, do the following to generate appropriate .dat files for data post-processing:
+###### Process the .root files output from VHDMSDv3 to generate appropriate .dat files for data post-processing
 ```
 # start the application Root
 > root
