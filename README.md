@@ -18,6 +18,7 @@ Improvement from VoxelizedHumanDoseMultiSDv1 include:
 #### GEOMETRY DEFINITION
 
 The geometry is constructed in the VHDDetectorConstruction class derived from the Geant4 abstract class, G4VUserDetectorConstruction. The VHDDetectorConstruction class does the following:
+
 1. Initialize and define elements and tissue composition needed for a given volume with its defined materials
 2. Read in the volume data files (.g4m) and merge all the data from each image slice via VHDPhantomZSliceHeader
 3. Construct the voxelized container based on the voxel size of the given volume
@@ -90,6 +91,3 @@ geoname=MIBGPT1_segCT
 # Run the root processing code in rootC/Root2Dat\_EdepTree.C, Root2Dat\_SrcEngHIST.C, etc.
 > .x rootC/Root2Dat_EdepTree.C (".......")
 ```
-
-
-	
