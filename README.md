@@ -4,7 +4,7 @@
 2. Institution: University of California, San Francisco
 3. Organization: Physics Research Laboratory (Principle Investigator: Prof. Youngho Seo)
 4. Software: 
-	- Geant4 - an Object-Oriented Toolkit for Simulation in High Energy Physics
+	- Geant4 - an Object-Oriented Toolkit for Simulation in High Energy Physics, version 4.9.6.p02
 	- VoxelizedHumanDoseMultiSDv3
 
 ### Introduction
@@ -72,7 +72,24 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 
 ##### HOW TO RUN
 
-1. Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
+1. Built the Geant4 C++ software via cmake
+```
+# Set up the Geant4 environment variables 
+> source [GEANT4 Install directory]/bin/geant4.sh
+
+# Make a build directory
+> mkdir build
+> cd build
+
+> ccmake ../VoxelizedHumanDoseMultiSDv3 # press 'g' to generate
+
+# N is the # of cores on the machine you'll run the MC simulations
+# this step will generate the executable
+> make -j[N]
+```
+Please see the [Geant4 compile and run tutorial videos] (http://geant4.in2p3.fr/spip.php?article84&lang=en) for more examples of Geant4 install, compile, and run instructions. 
+
+2. Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
 ```
 # See the bash script in scripts/VHDMSDv3MultiRun.sh 
 
@@ -92,7 +109,7 @@ geoname=MIBGPT1_segCT
 > source multijob.sh > multijoblog.txt
 
 ```
-2. To process the .root files output from VHDMSDv3, do the following to generate appropriate .dat files for data post-processing:
+3. To process the .root files output from VHDMSDv3, do the following to generate appropriate .dat files for data post-processing:
 ```
 # start the application Root
 > root
