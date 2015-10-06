@@ -5,7 +5,9 @@ Software:
 - VoxelizedHumanDoseMultiSDv3
 
 Author: Shih-ying (Clare) Huang
+
 Institution: University of California, San Francisco
+
 Organization: Physics Research Laboratory (Principle Investigator: Prof. Youngho Seo)
 
 ### Introduction
@@ -16,7 +18,7 @@ Improvement from VoxelizedHumanDoseMultiSDv1 include:
 - Added a factory design pattern class for DetectorConstruction class 
 - Added a Factory design pattern class for RunAction class
 
-##### GEOMETRY DEFINITION
+#### GEOMETRY DEFINITION
 
 The geometry is constructed in the VHDDetectorConstruction class derived from the Geant4 abstract class, G4VUserDetectorConstruction. The VHDDetectorConstruction class does the following:
 1. Initialize and define elements and tissue composition needed for a given volume with its defined materials
@@ -34,11 +36,11 @@ Note:
 	- these derived classes have different definition in the member function "GetIndx(....)" for nested parameterized vs.regular parameterized geometry
 	- future improvement will re-structure the usage of these derived classes using factory design pattern
 
-###### PHYSICS LIST
+#### PHYSICS LIST
 
 This application uses the modular physics lists as a starter to define the physics needed for dosimetry purpose.  Since this application is designed to work with any form of targeted radionuclide therapy or other radiation therapy, the option to select the appropriate physics lists defined in Geant4 are necessary.  By default, G4EmStandardPhysics??????, G4DecayPhysics, and G4RadioactiveDecayPhysics are registered in the user-defined physicslist class.  A physics messenger class, VHDPhysicsListMessenger, was defined for users to select physics lists via macro or command line interactively.
  	 
-##### PRIMARY GENERATOR
+#### PRIMARY GENERATOR
 
 The primary generator is defined in the VHDPrimaryGeneratorAction class, which does the following..
 1. Declare a particle gun for primary generation
@@ -46,7 +48,7 @@ The primary generator is defined in the VHDPrimaryGeneratorAction class, which d
 3. Sample the particle position and momentum using Rejection sampling and built-in function that generates isotropic momemtum (this can replaced by using G4ParticleSource)
 4. FIRE away with the primary particles!
 
-##### DETECTOR RESPONSE & SCORING
+#### DETECTOR RESPONSE & SCORING
 
 In order to score quantities of interest, the following optinal user-defined actions were defined
 
@@ -56,7 +58,7 @@ In order to score quantities of interest, the following optinal user-defined act
 4. VHDMultiSDRunAction: EndOfRunAction was defined to save the final scorer results in .raw or .root format (defined in the derived class VHDMSDRunActionROOT)
     
 
-##### VISUALISATION
+#### VISUALISATION
 
 this version of the VHDMSD does not turn on any visualization related function.
 
