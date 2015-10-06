@@ -15,7 +15,7 @@ Improvement from VoxelizedHumanDoseMultiSDv1 include:
 - Added a factory design pattern class for DetectorConstruction class 
 - Added a Factory design pattern class for RunAction class
 
-### GEOMETRY DEFINITION
+### Geometry definition
 
 The geometry is constructed in the VHDDetectorConstruction class derived from the Geant4 abstract class, G4VUserDetectorConstruction. The VHDDetectorConstruction class does the following:
 
@@ -33,11 +33,11 @@ Note:
          parameterized geometry definition (see GetIndex(....) in its class definition)
 	- these derived classes have different definition in the member function "GetIndx(....)" for nested parameterized vs.regular parameterized geometry (DetectorContFactory class will use one of the geoemtry option)
 
-### PHYSICS LIST
+### Physics list
 
 This application uses the modular physics lists as a starter to define the physics needed for dosimetry purpose.  Since this application is designed to work with any form of targeted radionuclide therapy or other radiation therapy, the option to select the appropriate physics lists defined in Geant4 are necessary.  By default, G4EmStandardPhysics, G4DecayPhysics, and G4RadioactiveDecayPhysics are registered in the user-defined physicslist class.  A physics messenger class, VHDPhysicsListMessenger, was defined for users to select physics lists via macro or command line interactively.
  	 
-### PRIMARY GENERATOR
+### Primary generator
 
 The primary generator is defined in the VHDPrimaryGeneratorAction class, which does the following..
 1. Declare a particle gun for primary generation
@@ -45,7 +45,7 @@ The primary generator is defined in the VHDPrimaryGeneratorAction class, which d
 3. Sample the particle position and momentum using Rejection sampling and built-in function that generates isotropic momemtum (this can replaced by using G4ParticleSource)
 4. FIRE away with the primary particles!
 
-### DETECTOR RESPONSE & SCORING
+### Detector response & scores
 
 In order to score quantities of interest, the following optinal user-defined actions were defined
 
@@ -73,11 +73,13 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 ### How to Run the MC software
 
 ##### Built the Geant4 C++ software via cmake
-```
-# Set up the Geant4 environment variables 
-> source [GEANT4 Install directory]/bin/geant4.sh
 
-# Make a build directory
+1. Set up the Geant4 environment variables 
+```
+> source [GEANT4 Install directory]/bin/geant4.sh
+```
+2. Make a build directory to generate the executable
+```
 > mkdir build
 > cd build
 > ccmake ../VoxelizedHumanDoseMultiSDv3 # press 'g' to generate
@@ -90,30 +92,34 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 Please see the [Geant4 compile and run tutorial videos] (http://geant4.in2p3.fr/spip.php?article84&lang=en) for more examples of Geant4 install, compile, and run instructions. 
 
 ##### Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
-```
-# See the bash script in scripts/VHDMSDv3MultiRun.sh 
 
+1. See the bash script in scripts/VHDMSDv3MultiRun.sh 
+```
 > VHDMSDv3MultiRun.sh [Geo_id] [SrcOrganName] [Run1] [Run2]
 # [Geo_id]: the name of the geometry used in the Monte Carlo simulations
 # [SrcOrganName]: the name of source organ for this dose simultion
 # [Run1]: the ID # of the starting simulation run
 # [Run2]: the ID # of the ending simulatiion run
+```
 
-# For multiple Monte Carlo simulations:
-
+2. Run multiple Monte Carlo simulations:
+```
 # Set the source organ and geo_id appropriately in multijob.sh
 SO=Brain
 geoname=MIBGPT1_segCT
 
 # Submit multiple MC simulations
 > source multijob.sh > multijoblog.txt
-
 ```
+
 ##### Process the .root files output from VHDMSDv3 to generate appropriate .dat files for data post-processing
-```
-# start the application Root
-> root
 
-# Run the root processing code in rootC/Root2Dat\_EdepTree.C, Root2Dat\_SrcEngHIST.C, etc.
+1. Start the application Root
+```
+> root
+```
+
+2. Run the root processing code in rootC/Root2Dat\_EdepTree.C, Root2Dat\_SrcEngHIST.C, etc.
+```
 > .x rootC/Root2Dat_EdepTree.C (".......")
 ```
