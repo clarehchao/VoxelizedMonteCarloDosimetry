@@ -1,0 +1,45 @@
+# Sets some default verbos
+#/control/verbose 0
+/control/verbose 1
+/run/verbose 0
+/tracking/verbose 0
+/event/verbose 0
+
+/VHDMSDv1/phys/setCuts 0.1 mm
+#/VHDMSDv1/phys/setCuts 0.5 mm
+#/VHDMSDv1/phys/setCuts 0.3 mm
+#/VHDMSDv1/phys/setCuts 0.2 mm
+/VHDMSDv1/phys/addPhysics emstandard_opt3
+#/VHDMSDv1/phys/addPhysics emlivermore
+#/VHDMSDv1/phys/addPhysics empenelope
+/run/initialize
+
+# Rad decay stuff
+#/grdm/noVolumes
+#/grdm/selectVolume logicPhantomSens
+/grdm/verbose 0
+#/grdm/noVolumes
+#/grdm/selectVolume logicVoxel
+/grdm/allVolumes # use all volumes
+/grdm/fBeta 0 # use fast beta decay if set to 1 (histogram-based), 3-body decay otherwise
+#/grdm/fBeta 1 # use fast beta decay if set to 1 (histogram-based), 3-body decay otherwise
+/grdm/analogueMC 1 # (analog monte carlo)
+#/grdm/analogueMC 0 #(VR method)
+#/grdm/hlThreshold -1.0000e+00 s
+
+# particle gun definition
+/gun/particle ion
+/gun/energy 0 keV
+/gun/ion 53 131 0 0  #A (atomicNumber), Z (atomicMass), Q (charge of ion in unit of e), E (excitation energy in kev)
+/grdm/nucleusLimits 131 131 53 53 # restrict radioactive decay to I-131
+
+
+# run simulation
+#/run/beamOn 10000 # number of particles
+#/run/beamOn 2000000 # number of particles
+#/run/beamOn 10 # number of particles
+/run/beamOn 1000000 # number of particles
+#/run/beamOn 10000
+#/run/beamOn 5000000
+#/run/beamOn 10000000
+#/run/beamOn 2000000

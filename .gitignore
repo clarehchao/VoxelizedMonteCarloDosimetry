@@ -1,0 +1,7 @@
+# duplicate cate files
+*~
+clean.sh
+g4cmake.sh
+
+# directories
+extra/
