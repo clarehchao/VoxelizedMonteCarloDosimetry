@@ -1,6 +1,6 @@
 ## Voxelized Monte Calor Dosimety Simulations
 
-### Software details: 
+### Software details
 - Geant4 - an Object-Oriented Toolkit for Simulation in High Energy Physics, version 4.9.6.p02
 - VoxelizedHumanDoseMultiSDv3
 
