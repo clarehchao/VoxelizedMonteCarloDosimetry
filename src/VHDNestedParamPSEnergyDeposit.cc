@@ -32,6 +32,7 @@
  */
 
 #include "VHDNestedParamPSEnergyDeposit.hh"
+#include "G4Track.hh"
 
 
 VHDNestedParamPSEnergyDeposit::VHDNestedParamPSEnergyDeposit(G4String name,G4int nx, G4int ny, G4int nz)

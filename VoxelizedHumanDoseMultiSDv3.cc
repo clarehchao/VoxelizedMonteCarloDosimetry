@@ -50,7 +50,6 @@ int main(int argc,char **argv) {
   double diffT;
   time(&start);   //get execution start time
 
-
   //===READ THE INPUT PARAMETERS=========
   G4String GEOtype = argv[1];
   G4String GEOdir = argv[2];
@@ -59,11 +58,19 @@ int main(int argc,char **argv) {
   G4String SRCMPname = argv[5];
   G4int isSRCMPsparse = atoi(argv[6]);
   G4String DATAdir = argv[7];
-  G4int elceh = atoi(argv[8]);
-  G4int photoneh = atoi(argv[9]);
+  G4int cfftype = atoi(argv[8]);
+  G4String OOItype = argv[9];
   G4String RUNACTtype = argv[10];
-  G4int ebin = atoi(argv[11]);  //ebin == 0, use 25 energy bins; ebin == 1, use 28 energy bins
-  G4String OOItype = argv[12];
+  G4String macfile = argv[11];
+  
+  
+  G4int elceh,photoneh,ebin;
+  if(cfftype == 1)
+  {
+    elceh = atoi(argv[12]);
+    photoneh = atoi(argv[13]);
+    ebin = atoi(argv[14]);  //ebin == 0, use 25 energy bins; ebin == 1, use 28 energy bins
+  }
   //===END OF READING INPUT PARAMETERS====
  
 
@@ -79,9 +86,12 @@ int main(int argc,char **argv) {
   VHDDetectorConstruction* theGeometry = theDetFactory->GetDetectorConstr(GEOtype);
   G4String geodirname = GEOdir + "/" + GEOname;
   theGeometry->SetDirName(geodirname);
-  theGeometry->SetParticleFlag(elceh,photoneh);
-  theGeometry->SetEnergyBinOption(ebin);
+  theGeometry->SetCellFluxFilterType(cfftype);
   theGeometry->SetOOItype(OOItype);
+  if (cfftype == 1){
+      theGeometry->SetParticleFlag(elceh,photoneh);
+      theGeometry->SetEnergyBinOption(ebin);
+  }
   runManager->SetUserInitialization(theGeometry);
   G4cout << "geodirname: " << geodirname << ", after the geometry!" << G4endl;
   
@@ -117,7 +127,10 @@ int main(int argc,char **argv) {
   //=====================================================================
   RunActionFactory* theRunActFactory = new RunActionFactory();
   VHDMultiSDRunAction* run = theRunActFactory->GetRunAction(RUNACTtype);
+  //
+  G4cout << "datadrive: " << datadrive << G4endl;
   run->SetRunInfo(datadrive);
+  run->SetCellFluxFilterType(cfftype);
   runManager->SetUserAction(run);
   G4cout << "after VHDMultiSDRunAction!" << G4endl;
   //=====================================================================
@@ -131,9 +144,6 @@ int main(int argc,char **argv) {
   G4UImanager * UIman = G4UImanager::GetUIpointer();
   G4cout << "argc = " << argc << G4endl;
   G4String execommand = "/control/execute ";
-  G4String macfile;
-  
-  macfile = argv[13];
   G4cout << "In batch mode: execute " << macfile << "! knut Knut KNUT!!!" << G4endl;
   UIman->ApplyCommand(execommand+macfile);
 

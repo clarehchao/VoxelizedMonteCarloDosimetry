@@ -79,78 +79,84 @@ void NestedParamVHDDetectorConstruction::SetMultiSensDet(G4LogicalVolume* voxel_
   MFDet->RegisterPrimitive(scorer0);
 
   //--- Cell flux for photon or electron with energy bin
-  //=======================read the energy bin file ==============================//
-  G4double tmp;
-  std::vector<G4double> engbin;
-
-  G4String fname;
-  if(ebin == 0)
-	fname = dirname + "/Energybin1.txt";   //25 energy bins; use this energy bin when using the DRFs provided by Choonsik Lee
-  else
-	fname = dirname + "/Energybin2.txt";  //28 energy bins; use this energy bin when using the DRFs from Wayson et al.'s datafile for newborn phantom
-  G4cout << "energybin fname = " << fname << G4endl;
-  std::ifstream finDF(fname);
-  if(finDF.good() != 1 )
-  {
-     G4Exception("VHDDetectorConstruction:SetMultiSensDet(G4LogicalVolume* voxel_logic)","",FatalErrorInArgument,G4String("Invalid file name: " + fname).c_str());
-  }
-  finDF >> NEngbin;
-  for(G4int i = 0; i < NEngbin; i++ ){
-    finDF >> tmp;
-    engbin.push_back(tmp);
-  }
-  finDF.close();
-  //=======================end of reading the energy bin file ==============================//
-
-
   //==================== Construct Cell Flux scorers for a number of energy bins============//
   G4double kmin,kmax;
   G4String filterName;
-  for (unsigned i = 0; i < engbin.size(); i++){
-      char name[17];
-      std::sprintf(name,"PhotonCellFlux%02d",i);
-      G4String psgName(name);
-      if(i == 0)
-	kmin = 0.0*keV;
+  if(CellFluxFilterType == 0)
+    G4cout << "VHDDetectorConstruction:SetMultiSensDet:: NO particle cell flux filter is set up!" << G4endl;
+  else if(CellFluxFilterType == 1)
+  {
+    //=======================read the energy bin file ==============================//
+      G4double tmp;
+      std::vector<G4double> engbin;
+
+      G4String fname;
+      if(ebin == 0)
+	    fname = dirname + "/Energybin1.txt";   //25 energy bins; use this energy bin when using the DRFs provided by Choonsik Lee
       else
-        kmin = engbin[i-1]*keV;
-      kmax = engbin[i]*keV;
+	    fname = dirname + "/Energybin2.txt";  //28 energy bins; use this energy bin when using the DRFs from Wayson et al.'s datafile for newborn phantom
+      G4cout << "energybin fname = " << fname << G4endl;
+      std::ifstream finDF(fname);
+      if(finDF.good() != 1 )
+      {
+         G4Exception("VHDDetectorConstruction:SetMultiSensDet(G4LogicalVolume* voxel_logic)","",FatalErrorInArgument,G4String("Invalid file name: " + fname).c_str());
+      }
+      finDF >> NEngbin;
+      for(G4int i = 0; i < NEngbin; i++ ){
+        finDF >> tmp;
+        engbin.push_back(tmp);
+      }
+      finDF.close();
+      //=======================end of reading the energy bin file ==============================//
+    
+      for (unsigned i = 0; i < engbin.size(); i++){
+          char name[17];
+          std::sprintf(name,"PhotonCellFlux%02d",i);
+          G4String psgName(name);
+          if(i == 0)
+	        kmin = 0.0*keV;
+          else
+            kmin = engbin[i-1]*keV;
+          kmax = engbin[i]*keV;
 
-      G4SDParticleWithEnergyFilter* pkinEFilter = new G4SDParticleWithEnergyFilter(filterName="photonE filter",kmin,kmax);
-      if(electronflag)	pkinEFilter->add("e-");     //accept e- electron
-      if(photonflag)	pkinEFilter->add("gamma");  // Accept gamma.
-      pkinEFilter->show();        // Show accepting condition to stdout.
-      
-      //-----Cell Flux Scorer that store the total tracklength per volume --> per unit surface
-      VHDNestedParamCellFlux* scorer = new VHDNestedParamCellFlux(psgName,nVoxelX,nVoxelY,nVoxelZ);
-      scorer->SetMaterialsOfInterest(fMaterialsOfInterest);  //define the material of interest
-      scorer->Weighted(FALSE);
-      scorer->SetFilter(pkinEFilter);    // Assign filter
-      MFDet->RegisterPrimitive(scorer);  // Register it to MultiFunctionalDetector
-  }
-  engbin.clear();
+          G4SDParticleWithEnergyFilter* pkinEFilter = new G4SDParticleWithEnergyFilter(filterName="photonE filter",kmin,kmax);
+          if(electronflag)	pkinEFilter->add("e-");     //accept e- electron
+          if(photonflag)	pkinEFilter->add("gamma");  // Accept gamma.
+          pkinEFilter->show();        // Show accepting condition to stdout.
+          
+          //-----Cell Flux Scorer that store the total tracklength per volume --> per unit surface
+          VHDNestedParamCellFlux* scorer = new VHDNestedParamCellFlux(psgName,nVoxelX,nVoxelY,nVoxelZ);
+          scorer->SetMaterialsOfInterest(fMaterialsOfInterest);  //define the material of interest
+          scorer->Weighted(FALSE);
+          scorer->SetFilter(pkinEFilter);    // Assign filter
+          MFDet->RegisterPrimitive(scorer);  // Register it to MultiFunctionalDetector
+      }
+      engbin.clear();
+   }
+   else if(CellFluxFilterType == 2)
+   {
+    // to determine photon/electron contribution to dose
+      kmin = 0.0*keV;
+      kmax = 10000*keV;
+      G4String pname = "PhotonCellFluxAll";
+      G4SDParticleWithEnergyFilter* pkinEFilter2 = new G4SDParticleWithEnergyFilter(filterName="photon filter",kmin,kmax);
+      pkinEFilter2->add("gamma");
+      VHDNestedParamCellFlux* scorer2 = new VHDNestedParamCellFlux(pname,nVoxelX,nVoxelY,nVoxelZ);
+      scorer2->SetMaterialsOfInterest(fMaterialsOfInterest);  //define the material of interest
+      scorer2->Weighted(FALSE);
+      scorer2->SetFilter(pkinEFilter2);    // Assign filter
+      MFDet->RegisterPrimitive(scorer2);  // Register it to MultiFunctionalDetector
 
-  /*
-  // to determine photon/electron contribution to dose
-  kmin = 0.0*keV;
-  G4String pname = "PhotonCellFluxAll";
-  G4SDParticleWithEnergyFilter* pkinEFilter2 = new G4SDParticleWithEnergyFilter(filterName="photon filter",kmin,kmax);
-  pkinEFilter2->add("gamma");
-  VHDNestedParamCellFlux* scorer2 = new VHDNestedParamCellFlux(pname,nVoxelX,nVoxelY,nVoxelZ);
-  scorer2->SetMaterialsOfInterest(fMaterialsOfInterest);  //define the material of interest
-  scorer2->Weighted(FALSE);
-  scorer2->SetFilter(pkinEFilter2);    // Assign filter
-  MFDet->RegisterPrimitive(scorer2);  // Register it to MultiFunctionalDetector
 
-
-  pname = "ElectronCellFluxAll";
-  G4SDParticleWithEnergyFilter* pkinEFilter3 = new G4SDParticleWithEnergyFilter(filterName="electron filter",kmin,kmax);
-  pkinEFilter3->add("e-");
-  VHDNestedParamCellFlux* scorer3 = new VHDNestedParamCellFlux(pname,nVoxelX,nVoxelY,nVoxelZ);
-  scorer3->SetMaterialsOfInterest(fMaterialsOfInterest);  //define the material of interest
-  scorer3->Weighted(FALSE);
-  scorer3->SetFilter(pkinEFilter3);    // Assign filter
-  MFDet->RegisterPrimitive(scorer3);  // Register it to MultiFunctionalDetector*/
+      pname = "ElectronCellFluxAll";
+      G4SDParticleWithEnergyFilter* pkinEFilter3 = new G4SDParticleWithEnergyFilter(filterName="electron filter",kmin,kmax);
+      pkinEFilter3->add("e-");
+      VHDNestedParamCellFlux* scorer3 = new VHDNestedParamCellFlux(pname,nVoxelX,nVoxelY,nVoxelZ);
+      scorer3->SetMaterialsOfInterest(fMaterialsOfInterest);  //define the material of interest
+      scorer3->Weighted(FALSE);
+      scorer3->SetFilter(pkinEFilter3);    // Assign filter
+      MFDet->RegisterPrimitive(scorer3);  // Register it to MultiFunctionalDetector
+   }
       
   G4cout << "end of setting up the multifunctional detectors..." << G4endl;
 }
@@ -219,10 +225,10 @@ void NestedParamVHDDetectorConstruction::ConstructPhantom()
 			logicVoxel,   // their logical volume
 			logXRep,      // Mother logical volume
 			kZAxis,       // Are placed along this axis 
-			kUndefined,        // Are placed along this axis 
-			//nVoxelZ,      // Number of cells
+			//kUndefined,        // Are placed along this axis 
+			nVoxelZ,      // Number of cells
 			param,        // Parameterisation
-			true);        // pSurfChk = true to check */ 
+			true);        // pSurfChk = true to check*/   
 
   SetMultiSensDet(logicVoxel);
 }

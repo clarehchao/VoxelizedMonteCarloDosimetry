@@ -16,7 +16,7 @@ RunActionFactory::RunActionFactory()
 
 RunActionFactory::~RunActionFactory()
 {
-;
+    G4cout << "delete RunActionFactory.." << G4endl;
 }
 
 VHDMultiSDRunAction* RunActionFactory::GetRunAction(G4String& type)

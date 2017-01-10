@@ -28,6 +28,7 @@ public:
   {  return (ix + iy*fNx + iz*fNxNy); }
   //void SetRunInfo(G4int count,char dname[],char rname[]);
   void SetRunInfo(char dname[]);
+  void SetCellFluxFilterType(G4int a){ CellFluxFilterType = a; }
 
 private:
   // Data member 
@@ -40,6 +41,7 @@ protected:
   //char runName[700];
   char dirName[700];
   //G4int rcount;
+  G4int CellFluxFilterType;
 
 };
 

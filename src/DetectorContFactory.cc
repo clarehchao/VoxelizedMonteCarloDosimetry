@@ -18,7 +18,7 @@ DetectorContFactory::DetectorContFactory()
 
 DetectorContFactory::~DetectorContFactory()
 {
-;
+    G4cout << "delete DetectorFactory.." << G4endl;
 }
 
 VHDDetectorConstruction* DetectorContFactory::GetDetectorConstr(G4String& type)

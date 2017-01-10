@@ -26,6 +26,7 @@ public:
   G4int GetNZ() const {return fNoFiles;}  //number of file is the same as the number of voxels in the z-direction
   G4int GetNEngbin() const {return NEngbin;}
   void SetDirName(G4String name) {dirname = name;}
+  void SetCellFluxFilterType(G4int a) {CellFluxFilterType = a;}
   void SetParticleFlag(G4int isElectron, G4int isPhoton);
   void DefineMaterialsOfInterest();
   void SetEnergyBinOption (G4int ieng) {ebin = ieng;};
@@ -81,9 +82,9 @@ protected:   //define all "private"-like variables in "protected" since there is
   G4int nVoxelX, nVoxelY, nVoxelZ, NEngbin;
   G4double voxelHalfDimX,  voxelHalfDimY, voxelHalfDimZ;
   
-  
   G4VPhysicalVolume* param_phys;
 
+  G4int CellFluxFilterType;
 };
 
 #endif

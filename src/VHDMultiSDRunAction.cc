@@ -52,6 +52,7 @@ VHDMultiSDRunAction::VHDMultiSDRunAction():G4UserRunAction()
   // - Prepare data member for VHDMultiSDRun.
   //   vector represents a list of MultiFunctionalDetector names.
   theSDName.push_back(G4String("PhantomSD"));
+  CellFluxFilterType = 0;
 }
 
 // Destructor.
@@ -99,13 +100,12 @@ void VHDMultiSDRunAction::BeginOfRunAction(const G4Run* aRun)
   CLHEP::HepRandom::setTheSeeds(currentseeds,index);
   CLHEP::HepRandom::showEngineStatus();
   
-  
-  G4int index = 89;
+  G4int index = 18;
   G4long currentseeds[2];
-  currentseeds[0] = 2065394217;
-  currentseeds[1] = 624727800;
+  currentseeds[0] = 1637037495;
+  currentseeds[1] = 728277899;
   CLHEP::HepRandom::setTheSeeds(currentseeds,index);
-  CLHEP::HepRandom::showEngineStatus();*/
+  CLHEP::HepRandom::showEngineStatus(); */
 }
 
 
@@ -115,7 +115,7 @@ void VHDMultiSDRunAction::EndOfRunAction(const G4Run* aRun)
   //print out the total number of events during this run
   G4cout << "Number of Events in this run: " << aRun->GetNumberOfEvent() << G4endl;
 
-  //- VHDMultiSDRun object.
+  //- VHDMultiSDRun object
   VHDMultiSDRun* MSDRun = (VHDMultiSDRun*)aRun;
   //--- Dump all socred quantities involved in VHDMultiSDRun to debug!
   //MSDRun->DumpAllScorer();
@@ -142,17 +142,19 @@ void VHDMultiSDRunAction::EndOfRunAction(const G4Run* aRun)
 
   //std::vector<G4THitsMap<G4double>*> pCurrHit;
   std::vector<G4THitsMap<G4double>*> pCellFlux;
-  char snamechar[50];
-  for(G4int i = 0; i < NEbin; i++)
-  {	
-	//std::sprintf(snamechar,"PhantomSD/PhotonSurfCurr%02d",i);
-	std::sprintf(snamechar,"PhantomSD/PhotonCellFlux%02d",i);
-      	G4String sname(snamechar);
-	G4THitsMap<G4double>* tmp = MSDRun->GetHitsMap(sname);
-	if(tmp != NULL){
-		pCellFlux.push_back(tmp);
-		//G4cout << "i = " << i << " push into pCellFlux!" << G4endl;
-	}
+  if (CellFluxFilterType == 1){
+      char snamechar[50];
+      for(G4int i = 0; i < NEbin; i++)
+      {	
+	    //std::sprintf(snamechar,"PhantomSD/PhotonSurfCurr%02d",i);
+	    std::sprintf(snamechar,"PhantomSD/PhotonCellFlux%02d",i);
+          	G4String sname(snamechar);
+	    G4THitsMap<G4double>* tmp = MSDRun->GetHitsMap(sname);
+	    if(tmp != NULL){
+		    pCellFlux.push_back(tmp);
+		    //G4cout << "i = " << i << " push into pCellFlux!" << G4endl;
+	    }
+      }
   }
 
   G4int ix,iy,iz,n,m;
@@ -177,7 +179,8 @@ void VHDMultiSDRunAction::EndOfRunAction(const G4Run* aRun)
 		}
 		else{
 			edepimg = new float [nxny];  //dynamic allocation of array memory
-			for(n=0; n<NEbin; n++)	pcellfluxhitimg.push_back(new float [nxny]);  //create all the image float arrays
+			if(CellFluxFilterType == 1)
+			    for(n=0; n<NEbin; n++)	pcellfluxhitimg.push_back(new float [nxny]);  //create all the image float arrays
 			//G4cout << " iz = " << iz << ", after new edepimg..." << G4endl;
 			for(iy = 0; iy < fNy; iy++){
 				b = iy*fNx;
@@ -195,11 +198,13 @@ void VHDMultiSDRunAction::EndOfRunAction(const G4Run* aRun)
 					//THE IF STATEMENT IS TO CREATE A G4DOUBLE IF THE CopyNo in totEdep does not exist since the hitmap is recorded using std::map with copyNo and energy deposit!!!
 					//edepimg[indx] = static_cast< float >((*totED)*1000);
 					edepimg[indx] = static_cast< float >(*totED);   //unit of MeV
-
-					for(m=0; m< NEbin; m++){
-						G4double* eh = (*pCellFlux[m])[CopyNo(ix,iy,iz)];
-						if (!eh) eh = zero_ptr;
-						pcellfluxhitimg[m][indx] = static_cast< float >(*eh);    //unit of cm-2
+                    
+                    if(CellFluxFilterType == 1){
+					    for(m=0; m< NEbin; m++){
+						    G4double* eh = (*pCellFlux[m])[CopyNo(ix,iy,iz)];
+						    if (!eh) eh = zero_ptr;
+						    pcellfluxhitimg[m][indx] = static_cast< float >(*eh);    //unit of cm-2
+					    }
 					}
 				}
 			}
@@ -208,29 +213,36 @@ void VHDMultiSDRunAction::EndOfRunAction(const G4Run* aRun)
 			delete[] edepimg;
 			//G4cout << "Finish writing the edepimg files!" << G4endl;
 
-
-			for(m=0; m<NEbin; m++){
-				std::sprintf(fname2,"%s/pCellFlux%02d/fluence%03d.raw",dirName,static_cast<int>(m+1),iz);
-				pt2 = fopen(fname2,"wb");
-				if(pt2 == NULL){
-					printf("cannot open file %s\n",fname2);
-				}
-				else{
-					fwrite(pcellfluxhitimg[m],sizeof(float),fNxNy,pt2);
-					fclose(pt2);
-					//G4cout << "Finish writing the pcurrhitimg files: " << m << G4endl;
-				}
-				delete[] pcellfluxhitimg[m];
-			}
-			pcellfluxhitimg.clear();  //MUST CLEAR THE VECTOR BEFORE USING IT AGAIN AS IT WILL KEEP ADDING THE CONTENT EVEN IF I DELETE THE ALLOCATED MEMORY!!!
-  			//G4cout << "after clearing pcellfluxhitimg..." << G4endl;
+            if(CellFluxFilterType == 1){
+			    for(m=0; m<NEbin; m++){
+				    std::sprintf(fname2,"%s/pCellFlux%02d/fluence%03d.raw",dirName,static_cast<int>(m+1),iz);
+				    pt2 = fopen(fname2,"wb");
+				    if(pt2 == NULL){
+					    printf("cannot open file %s\n",fname2);
+				    }
+				    else{
+					    fwrite(pcellfluxhitimg[m],sizeof(float),fNxNy,pt2);
+					    fclose(pt2);
+					    //G4cout << "Finish writing the pcurrhitimg files: " << m << G4endl;
+				    }
+				    delete[] pcellfluxhitimg[m];
+			    }
+			    pcellfluxhitimg.clear(); //MUST CLEAR THE VECTOR BEFORE USING IT AGAIN AS IT WILL KEEP ADDING THE CONTENT EVEN IF I DELETE THE ALLOCATED MEMORY!!!
+      	   }
   		}
   	}
   }
+  
 }
 
 void VHDMultiSDRunAction::SetRunInfo(char dname[])
 {
-	strcpy(dirName,dname);
+    if(dname != NULL){
+	    strcpy(dirName,dname);
+        //G4cout << "dirName: " << dirName << G4endl;
+        //G4cout << "dname: " << dname << G4endl;
+    }
+    else
+        G4cout << "dname is NULL!" << G4endl;
 }
 

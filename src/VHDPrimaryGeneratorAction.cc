@@ -283,7 +283,7 @@ void VHDPrimaryGeneratorAction::ReadDoseMapFile(const G4String& fname)
     }
     if(prob > 0.0)
     {
-	theProbSum += prob;
+	    theProbSum += prob;
     	probAccum[theProbSum] = nVoxels;
     }
   }
@@ -309,10 +309,6 @@ void VHDPrimaryGeneratorAction::SetSourceProbMapSparse(const G4String& dirname)
   offsetX = Xmin + dX/2.;
   offsetY = Ymin + dY/2.;
   offsetZ = Zmin + dZ/2.;
-  
-  //offsetX = Xmin + dX/2.+0.001;
-  //offsetY = Ymin + dY/2.+0.001;
-  //offsetZ = Zmin + dZ/2.+0.001;
 
   G4double prob;
   G4int ivox;

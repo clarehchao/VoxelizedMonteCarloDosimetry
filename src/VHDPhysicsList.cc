@@ -74,7 +74,7 @@ VHDPhysicsList::~VHDPhysicsList()
 void VHDPhysicsList::SetCuts()
 {
   //the default cut value for all particle types
-  SetCutsWithDefault();
+  //SetCutsWithDefault();
   
   G4cout << "current set cut value: " << defaultCutValue/mm << " mm" << G4endl;
 }
@@ -93,7 +93,7 @@ void VHDPhysicsList::AddPhysicsList(const G4String& name)
     itr = find(physicsVector->begin(),physicsVector->end(),emPhysicsList); 
     if(itr != physicsVector->end()){
     	delete (*itr);
-	physicsVector->erase(itr);
+	    physicsVector->erase(itr);
     	RegisterPhysics(new G4EmStandardPhysics_option1());
     }
     else
@@ -105,7 +105,7 @@ void VHDPhysicsList::AddPhysicsList(const G4String& name)
     itr = find(physicsVector->begin(),physicsVector->end(),emPhysicsList); 
     if(itr != physicsVector->end()){
     	delete (*itr);
-	physicsVector->erase(itr);
+	    physicsVector->erase(itr);
     	RegisterPhysics(new G4EmStandardPhysics_option2());
     }
     else
@@ -116,7 +116,7 @@ void VHDPhysicsList::AddPhysicsList(const G4String& name)
     itr = find(physicsVector->begin(),physicsVector->end(),emPhysicsList); 
     if(itr != physicsVector->end()){
     	delete (*itr);
-	physicsVector->erase(itr);
+	    physicsVector->erase(itr);
     	RegisterPhysics(new G4EmStandardPhysics_option3());
     }
     else
@@ -127,7 +127,7 @@ void VHDPhysicsList::AddPhysicsList(const G4String& name)
     itr = find(physicsVector->begin(),physicsVector->end(),emPhysicsList); 
     if(itr != physicsVector->end()){
     	delete (*itr);
-	physicsVector->erase(itr);
+	    physicsVector->erase(itr);
     	RegisterPhysics(new G4EmStandardPhysics_option4());
     }
     else
@@ -138,7 +138,7 @@ void VHDPhysicsList::AddPhysicsList(const G4String& name)
     itr = find(physicsVector->begin(),physicsVector->end(),emPhysicsList); 
     if(itr != physicsVector->end()){
     	delete (*itr);
-	physicsVector->erase(itr);
+	    physicsVector->erase(itr);
     	RegisterPhysics(new G4EmLivermorePhysics());
     }
     else
@@ -148,7 +148,7 @@ void VHDPhysicsList::AddPhysicsList(const G4String& name)
     itr = find(physicsVector->begin(),physicsVector->end(),emPhysicsList); 
     if(itr != physicsVector->end()){
     	delete (*itr);
-	physicsVector->erase(itr);
+	    physicsVector->erase(itr);
     	RegisterPhysics(new G4EmPenelopePhysics());
     }
     else

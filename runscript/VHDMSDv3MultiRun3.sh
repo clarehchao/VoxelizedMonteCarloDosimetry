@@ -6,7 +6,7 @@
 # $3: first run #, run1
 # $4: last run #, run2
 
-rootdir=/data3/G4data_Clare
+rootdir=/data2/G4data_Clare
 myg4dir=$rootdir/G4.9.6.p02work
 runname="./VHDMSDv3"
 rdirname=VoxelizedHumanDoseMultiSDv3-build
@@ -24,11 +24,9 @@ run1=$3
 run2=$4
 PARname=I131
 macfile=$RUNdir/macro/I131_Emphysics2.mac
-isElectron=1
-isPhoton=1
-RUNACTType=Root  #Root or Reg
-ebin=1   #ebin == 0, use 25 energy bins; ebin == 1, use 28 energy bins
+CFFtype=2
 OOItype=all # all or skel
+RUNACTType=Root  #Root or Reg
 
 #make the appropriate directories for the simulation
 dirtag="pCellFlux"
@@ -62,13 +60,13 @@ do
 			mkdir -p $dirname
 		done
 	fi
- 	$runname $GEOtype $GEOdir $GEOname $SRCMPdir $SRCMPname $isSRCMPsparse $datadirname $isElectron $isPhoton $RUNACTType $ebin $OOItype $macfile > $datadirname/log.txt
- 	#echo "$runname $GEOtype $GEOdir $GEOname $SRCMPdir $SRCMPname $isSRCMPsparse $datadirname $isElectron $isPhoton $RUNACTType $ebin $OOItype $macfile > $datadirname/log.txt"
-	echo "Finish $runname run #$n [$ORGANname]! good job bucko!"
+	#echo "$runname $GEOtype $GEOdir $GEOname $SRCMPdir $SRCMPname $isSRCMPsparse $datadirname $CFFtype $OOItype $RUNACTType $macfile > $datadirname/log.txt"
+ 	$runname $GEOtype $GEOdir $GEOname $SRCMPdir $SRCMPname $isSRCMPsparse $datadirname $CFFtype $OOItype $RUNACTType $macfile > $datadirname/log.txt
+	echo "Finish $runname run #$n [$GEOname][$ORGANname]! good job bucko!"
 
 	#if [ "$n" -ne "$run2" ]
 	#then 
-	#	echo "~~Give me a break, break me a piece of that kit-kat bar~~ 6-mins!"
-    #    	sleep 6m  #sleep/delay for 6 minutes
+	#	echo "~~Give me a break, break me a piece of that kit-kat bar~~ 3-mins!"
+        #	sleep 3m  #sleep/delay for some time
 	#fi
 done

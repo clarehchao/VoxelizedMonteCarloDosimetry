@@ -43,6 +43,7 @@
 #include "VHDPhantomZSliceHeader.hh"
 #include <stdlib.h>
 #include <stdio.h>
+#include <typeinfo>
 
 //#ifdef G4VIS_USE
 //#include "G4VisAttributes.hh"
@@ -415,10 +416,11 @@ void VHDDetectorConstruction::ConstructPhantomContainer()
   voxelHalfDimX = fZSliceHeaderMerged->GetVoxelHalfX();
   voxelHalfDimY = fZSliceHeaderMerged->GetVoxelHalfY();
   voxelHalfDimZ = fZSliceHeaderMerged->GetVoxelHalfZ();
+  
 // #ifdef G4VERBOSE
-   G4cout << " nVoxelX " << nVoxelX << " voxelHalfDimX " << voxelHalfDimX <<G4endl;
-   G4cout << " nVoxelY " << nVoxelY << " voxelHalfDimY " << voxelHalfDimY <<G4endl;
-   G4cout << " nVoxelZ " << nVoxelZ << " voxelHalfDimZ " << voxelHalfDimZ <<G4endl;
+   G4cout << " nVoxelX " << nVoxelX << " voxelHalfDimX " << voxelHalfDimX << ", " << typeid(voxelHalfDimX).name() << G4endl;
+   G4cout << " nVoxelY " << nVoxelY << " voxelHalfDimY " << voxelHalfDimY << ", " << typeid(voxelHalfDimY).name() <<G4endl;
+   G4cout << " nVoxelZ " << nVoxelZ << " voxelHalfDimZ " << voxelHalfDimZ << ", " << typeid(voxelHalfDimZ).name() <<G4endl;
    G4cout << " totalPixels " << nVoxelX*nVoxelY*nVoxelZ <<  G4endl;
 // #endif
 
@@ -454,7 +456,7 @@ void VHDDetectorConstruction::ConstructPhantomContainer()
 		      false,           // No op. bool.
 		      1);              // Copy number
 		      
-/*   container_phys = new G4PVPlacement(0,  // rotation
+ /*  container_phys = new G4PVPlacement(0,  // rotation
  		      posCentreVoxels,
  		      container_logic,     // The logic volume
  		      "phantomContainer",  // Name
@@ -497,7 +499,7 @@ void VHDDetectorConstruction::DefineMaterialsOfInterest()
  	
 	if(!OOItype)
 	  G4Exception("VHDDetectorConstruction:DefineMaterialsOfInterest()","",FatalErrorInArgument,G4String("OOItype is not defined!").c_str());
-        else{
+    else{
 	  fname = dirname + "/OrgantagOfInterest_" + OOItype + ".txt";
 	  
 	  std::ifstream fin(fname);

@@ -64,16 +64,19 @@ endif()
 #
 
 set(EXAMPLEVHDMSDv3_SCRIPTS
-  clean.sh
+#  clean.sh
   macro/vis.mac
   macro/I131_Emphysics1.mac
   macro/I131_Emphysics2.mac
   runscript/VHDMSDv3MultiRun.sh
   runscript/multijob.sh
+  runscript/VHDMSDv3MultiRun3.sh
   runscript/sleep.sh
+  runscript/MIBGPT3.sh
   rootC/Root2Dat_EdepTree.C
   rootC/Root2Dat_FluenceTree.C
   rootC/Root2Dat_SrcEngHIST.C
+  rootC/Root2Dat_FluenceAllTree.C
 )
 
 foreach(_script ${EXAMPLEVHDMSDv3_SCRIPTS})
