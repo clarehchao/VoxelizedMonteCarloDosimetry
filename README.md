@@ -22,7 +22,7 @@ The geometry is constructed in the VHDDetectorConstruction class derived from th
 4. Construct the phantom implemented by its derived class RegularVHDDetectorConstruction or NestedParamVHDDetectorConstruction (per user's choice via DetectorContFactory class)
 
 Note:
-- Prior to running this application, geometry files will need to be generated in the .g4m format (see [Image-based Dosimetry Python Toolkit] (https://github.com/clarehchao/ImageBasedDosimetryTool))
+- Prior to running this application, geometry files will need to be generated in the .g4m format (see [Image-based Dosimetry Python Toolkit](https://github.com/clarehchao/ImageBasedDosimetryTool))
 - There are several scorers defined as well to tally the physical quantities of interest such as
 	- VHDMSDCellFlux and VHDMSDCellFlux_RegParam
 	- VHDPSEnergyDeposit and VHDPSEnergyDeposit_RegParam
@@ -86,7 +86,7 @@ Make a build directory to generate the executable
 # this step will generate the executable
 > make -j[N]
 ```
-Please see the [Geant4 compile and run tutorial videos] (http://geant4.in2p3.fr/spip.php?article84&lang=en) for more examples of Geant4 install, compile, and run instructions. 
+Please see the [Geant4 compile and run tutorial videos](http://geant4.in2p3.fr/spip.php?article84&lang=en) for more examples of Geant4 install, compile, and run instructions. 
 
 ##### Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
 
