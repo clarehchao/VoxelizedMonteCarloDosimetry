@@ -72,19 +72,22 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 ##### Built the Geant4 C++ software via cmake
 
 - Set up the Geant4 environment variables
-```
+```console
 > source [GEANT4 Install directory]/bin/geant4.sh
 ```
 
 - Make a build directory to generate the executable
-```
+```console
 > mkdir build
 > cd build
 > ccmake ../VoxelizedHumanDoseMultiSDv3
-\# press 'g' to generate
+```
 
-\# N is the # of cores on the machine you'll run the MC simulations
-\# this step will generate the executable
+press 'g' to generate and make
+
+```console
+# N is the # of cores on the machine you'll run the MC simulations
+# this step will generate the executable
 > make -j[N]
 ```
 
@@ -93,21 +96,23 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 ##### Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
 
 - See the bash script in scripts/VHDMSDv3MultiRun.sh 
-
+```console
 > VHDMSDv3MultiRun.sh [Geo_id] [SrcOrganName] [Run1] [Run2]
-> # [Geo_id]: the name of the geometry used in the Monte Carlo simulations
-> # [SrcOrganName]: the name of source organ for this dose simultion
-> # [Run1]: the ID # of the starting simulation run
-> # [Run2]: the ID # of the ending simulatiion run
-
+# [Geo_id]: the name of the geometry used in the Monte Carlo simulation
+# [SrcOrganName]: the name of source organ for this dose simultion
+# [Run1]: the ID # of the starting simulation run
+# [Run2]: the ID # of the ending simulatiion run
+```
 
 - Run multiple Monte Carlo simulations:
-```
-# Set the source organ and geo_id appropriately in multijob.sh
+```bash
+#Set the source organ and geo_id appropriately in multijob.sh
 SO=Brain
 geoname=MIBGPT1_segCT
+```
 
-> # Submit multiple MC simulations
+```console
+# Submit multiple MC simulations
 > source multijob.sh > multijoblog.txt
 ```
 
