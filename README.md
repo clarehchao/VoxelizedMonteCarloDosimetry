@@ -73,19 +73,17 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 
 - Set up the Geant4 environment variables
 ```
-> source [GEANT4 Install directory]/bin/geant4.sh
+source [GEANT4 Install directory]/bin/geant4.sh
 ```
 
 - Make a build directory to generate the executable
 ```
-> mkdir build
-> cd build
-> ccmake ../VoxelizedHumanDoseMultiSDv3 # press 'g' to generate
-
-
+mkdir build
+cd build
+ccmake ../VoxelizedHumanDoseMultiSDv3 # press 'g' to generate
 # N is the # of cores on the machine you'll run the MC simulations
 # this step will generate the executable
-> make -j[N]
+make -j[N]
 ```
 
 - Please see the [Geant4 compile and run tutorial videos](http://geant4.in2p3.fr/spip.php?article84&lang=en) for more examples of Geant4 install, compile, and run instructions. 
@@ -94,7 +92,7 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 
 - See the bash script in scripts/VHDMSDv3MultiRun.sh 
 ```
-> VHDMSDv3MultiRun.sh [Geo_id] [SrcOrganName] [Run1] [Run2]
+VHDMSDv3MultiRun.sh [Geo_id] [SrcOrganName] [Run1] [Run2]
 # [Geo_id]: the name of the geometry used in the Monte Carlo simulations
 # [SrcOrganName]: the name of source organ for this dose simultion
 # [Run1]: the ID # of the starting simulation run
@@ -106,10 +104,8 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 # Set the source organ and geo_id appropriately in multijob.sh
 SO=Brain
 geoname=MIBGPT1_segCT
-
-
 # Submit multiple MC simulations
-> source multijob.sh > multijoblog.txt
+source multijob.sh > multijoblog.txt
 ```
 
 - All output data will be saved in the [G4_build_dir]/data
@@ -125,5 +121,5 @@ Run the root processing code in rootC/Root2Dat\_EdepTree.C, Root2Dat\_SrcEngHIST
 # SrcParticle: the name of the source particle, e.g. "I131"
 # Run_start and Run_end: the starting and end Run ID's to process
 
-> root -l 'rootC/runEdepTree.C("[G4dataDir]","[SrcOrganNameTxtFile]","[SrcParticke]",[Run_start],[Run_end])'
+root -l 'rootC/runEdepTree.C("[G4dataDir]","[SrcOrganNameTxtFile]","[SrcParticke]",[Run_start],[Run_end])'
 ```
