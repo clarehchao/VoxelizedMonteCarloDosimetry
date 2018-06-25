@@ -109,7 +109,11 @@ geoname=MIBGPT1_segCT
 > source multijob.sh > multijoblog.txt
 ```
 
+All output data will be saved in the [G4_build_dir]/data.
+
 ##### Process the .root files output from VHDMSDv3 to generate appropriate .dat files for data post-processing
+
+Note: this step is not needed no more due to update in the dosimetry toolkit.
 
 Run the root processing code in rootC/Root2Dat\_EdepTree.C, Root2Dat\_SrcEngHIST.C, etc.
 ```
