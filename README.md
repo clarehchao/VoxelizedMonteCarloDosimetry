@@ -104,14 +104,12 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 ```
 
 - Run multiple Monte Carlo simulations
-	- Set the source organ and geo_id appropriately in multiojob.sh
-```bash
+```console
+# Set the source organ and geo_id appropriately in multijob.sh
 SO=Brain
 geoname=MIBGPT1_segCT
-```
 
-	- Submit multiple MC simulations
-```console
+# Submit multiple MC simulations
 > source multijob.sh > multijoblog.txt
 ```
 
