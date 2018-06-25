@@ -71,12 +71,12 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 
 ##### Built the Geant4 C++ software via cmake
 
-Set up the Geant4 environment variables
+- Set up the Geant4 environment variables
 ```
 > source [GEANT4 Install directory]/bin/geant4.sh
 ```
 
-Make a build directory to generate the executable
+- Make a build directory to generate the executable
 ```
 > mkdir build
 > cd build
@@ -86,11 +86,11 @@ Make a build directory to generate the executable
 # this step will generate the executable
 > make -j[N]
 ```
-Please see the [Geant4 compile and run tutorial videos](http://geant4.in2p3.fr/spip.php?article84&lang=en) for more examples of Geant4 install, compile, and run instructions. 
+- Please see the [Geant4 compile and run tutorial videos](http://geant4.in2p3.fr/spip.php?article84&lang=en) for more examples of Geant4 install, compile, and run instructions. 
 
 ##### Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
 
-See the bash script in scripts/VHDMSDv3MultiRun.sh 
+- See the bash script in scripts/VHDMSDv3MultiRun.sh 
 ```
 > VHDMSDv3MultiRun.sh [Geo_id] [SrcOrganName] [Run1] [Run2]
 # [Geo_id]: the name of the geometry used in the Monte Carlo simulations
@@ -99,7 +99,7 @@ See the bash script in scripts/VHDMSDv3MultiRun.sh
 # [Run2]: the ID # of the ending simulatiion run
 ```
 
-Run multiple Monte Carlo simulations:
+- Run multiple Monte Carlo simulations:
 ```
 # Set the source organ and geo_id appropriately in multijob.sh
 SO=Brain
@@ -109,7 +109,7 @@ geoname=MIBGPT1_segCT
 > source multijob.sh > multijoblog.txt
 ```
 
-All output data will be saved in the [G4_build_dir]/data.
+- All output data will be saved in the [G4_build_dir]/data.
 
 ##### Process the .root files output from VHDMSDv3 to generate appropriate .dat files for data post-processing
 
