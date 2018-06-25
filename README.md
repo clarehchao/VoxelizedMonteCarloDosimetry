@@ -55,7 +55,7 @@ In order to score quantities of interest, the following optinal user-defined act
 
 ### MC Simulation Setup
 To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
-```
+```bash
 # Set the isotope for the source particle, e.g. I-131
 /gun/ion 53 131 0 0  #A (atomicNumber), Z (atomicMass), Q (charge of ion in unit of e), E (excitation energy in kev)
 /grdm/nucleusLimits 131 131 53 53 # restrict radioactive decay to I-131
@@ -83,7 +83,7 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 > ccmake ../VoxelizedHumanDoseMultiSDv3
 ```
 
-press 'g' to generate and make
+- press 'g' to generate and make
 
 ```console
 # N is the # of cores on the machine you'll run the MC simulations
@@ -104,15 +104,16 @@ press 'g' to generate and make
 # [Run2]: the ID # of the ending simulatiion run
 ```
 
-- Run multiple Monte Carlo simulations:
+- Run multiple Monte Carlo simulations
+	- Set the source organ and geo_id appropriately in multiojob.sh
+
 ```bash
-#Set the source organ and geo_id appropriately in multijob.sh
 SO=Brain
 geoname=MIBGPT1_segCT
 ```
 
+	- Submit multiple MC simulations
 ```console
-# Submit multiple MC simulations
 > source multijob.sh > multijoblog.txt
 ```
 
