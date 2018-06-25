@@ -107,8 +107,7 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 ```console
 # Set the source organ and geo_id appropriately in multijob.sh
 SO=Brain
-geoname=MIBGPT1_segCT
-
+geoname=MIBGPT1_segCT<br/><br/>
 # Submit multiple MC simulations
 > source multijob.sh > multijoblog.txt
 ```
