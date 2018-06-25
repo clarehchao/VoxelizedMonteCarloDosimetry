@@ -82,6 +82,7 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 > cd build
 > ccmake ../VoxelizedHumanDoseMultiSDv3 # press 'g' to generate
 
+
 # N is the # of cores on the machine you'll run the MC simulations
 # this step will generate the executable
 > make -j[N]
@@ -105,6 +106,7 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 # Set the source organ and geo_id appropriately in multijob.sh
 SO=Brain
 geoname=MIBGPT1_segCT
+
 
 # Submit multiple MC simulations
 > source multijob.sh > multijoblog.txt
