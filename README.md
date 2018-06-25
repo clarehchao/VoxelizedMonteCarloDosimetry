@@ -80,7 +80,9 @@ source [GEANT4 Install directory]/bin/geant4.sh
 ```
 mkdir build
 cd build
-ccmake ../VoxelizedHumanDoseMultiSDv3 # press 'g' to generate
+ccmake ../VoxelizedHumanDoseMultiSDv3
+# press 'g' to generate
+
 # N is the # of cores on the machine you'll run the MC simulations
 # this step will generate the executable
 make -j[N]
@@ -104,6 +106,7 @@ VHDMSDv3MultiRun.sh [Geo_id] [SrcOrganName] [Run1] [Run2]
 # Set the source organ and geo_id appropriately in multijob.sh
 SO=Brain
 geoname=MIBGPT1_segCT
+
 # Submit multiple MC simulations
 source multijob.sh > multijoblog.txt
 ```
