@@ -81,10 +81,10 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 > mkdir build
 > cd build
 > ccmake ../VoxelizedHumanDoseMultiSDv3
-# press 'g' to generate
+\# press 'g' to generate
 
-# N is the # of cores on the machine you'll run the MC simulations
-# this step will generate the executable
+\# N is the # of cores on the machine you'll run the MC simulations
+\# this step will generate the executable
 > make -j[N]
 ```
 
