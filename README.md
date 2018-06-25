@@ -86,6 +86,7 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 # this step will generate the executable
 > make -j[N]
 ```
+
 - Please see the [Geant4 compile and run tutorial videos](http://geant4.in2p3.fr/spip.php?article84&lang=en) for more examples of Geant4 install, compile, and run instructions. 
 
 ##### Execute VoxelizedHumanDoseMultiSDv3  in the 'batch' mode from macro files (without visualization)
@@ -109,7 +110,7 @@ geoname=MIBGPT1_segCT
 > source multijob.sh > multijoblog.txt
 ```
 
-- All output data will be saved in the [G4_build_dir]/data.
+- All output data will be saved in the [G4_build_dir]/data
 
 ##### Process the .root files output from VHDMSDv3 to generate appropriate .dat files for data post-processing
 
