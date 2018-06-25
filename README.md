@@ -84,7 +84,6 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 ```
 
 - press 'g' to generate and make
-
 ```console
 # N is the # of cores on the machine you'll run the MC simulations
 # this step will generate the executable
@@ -106,16 +105,15 @@ To modify any MC-related setup, see the file macro/I131_Emphysics2.mac
 
 - Run multiple Monte Carlo simulations
 	- Set the source organ and geo_id appropriately in multiojob.sh
-
-```bash
-SO=Brain
-geoname=MIBGPT1_segCT
-```
+	```bash
+	SO=Brain
+	geoname=MIBGPT1_segCT
+	```
 
 	- Submit multiple MC simulations
-```console
-> source multijob.sh > multijoblog.txt
-```
+	```console
+	> source multijob.sh > multijoblog.txt
+	```
 
 - All output data will be saved in the [G4_build_dir]/data
 
