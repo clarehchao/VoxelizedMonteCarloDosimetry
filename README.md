@@ -127,5 +127,5 @@ Run the root processing code in rootC/Root2Dat\_EdepTree.C, Root2Dat\_SrcEngHIST
 # SrcParticle: the name of the source particle, e.g. "I131"
 # Run_start and Run_end: the starting and end Run ID's to process
 
-> root -l 'rootC/runEdepTree.C("[G4dataDir]","[SrcOrganNameTxtFile]","[SrcParticke]",[Run_start],[Run_end])'
+> root -l 'rootC/Root2Dat_EdepTree.C("[G4dataDir]","[SrcOrganNameTxtFile]","[SrcParticke]",[Run_start],[Run_end])'
 ```
